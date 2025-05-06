@@ -4,10 +4,13 @@ import Content from "./Content";
 import Loader from "./Loader";
 import Error from "./Error";
 import Start from "./Start";
+import Questions from "./Questions";
 
 const initialState = {
   questions: [],
   status: "loading",
+  index: 0,
+  answer: null,
 };
 
 function reducer(state, action) {
@@ -23,13 +26,27 @@ function reducer(state, action) {
         ...state,
         status: "error",
       };
+
+    case "start":
+      return {
+        ...state,
+        status: "active",
+      };
+    case "newAnsewr":
+      return {
+        ...state,
+        answer: action.payload,
+      };
     default:
       throw new Error("Unknown action");
   }
 }
 
 const App = () => {
-  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index, answer }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   const numQuestions = questions.length;
 
@@ -46,7 +63,16 @@ const App = () => {
       <Content>
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
-        {status === "ready" && <Start numQuestions={numQuestions} />}
+        {status === "ready" && (
+          <Start numQuestions={numQuestions} dispatch={dispatch} />
+        )}
+        {status === "active" && (
+          <Questions
+            question={questions[index]}
+            dispatch={dispatch}
+            answer={answer}
+          />
+        )}
       </Content>
     </div>
   );
