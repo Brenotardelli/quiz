@@ -7,6 +7,7 @@ import Start from "./Start";
 import Questions from "./Questions";
 import NextButton from "./NextButton";
 import Progress from "./Progress";
+import Finish from "./Finish";
 
 const initialState = {
   questions: [],
@@ -50,6 +51,9 @@ function reducer(state, action) {
 
     case "nextQuestion":
       return { ...state, index: state.index + 1, answer: null };
+
+    case "finish":
+      return { ...state, status: "finished" };
     default:
       throw new Error("Unknown action");
   }
@@ -94,8 +98,16 @@ const App = () => {
               dispatch={dispatch}
               answer={answer}
             />
-            <NextButton dispatch={dispatch} answer={answer} />
+            <NextButton
+              dispatch={dispatch}
+              answer={answer}
+              numQuestions={numQuestions}
+              index={index}
+            />
           </>
+        )}
+        {status === "finished" && (
+          <Finish points={points} maxPoints={maxPoints} />
         )}
       </Content>
     </div>
