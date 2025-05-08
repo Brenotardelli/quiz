@@ -54,6 +54,12 @@ function reducer(state, action) {
 
     case "finish":
       return { ...state, status: "finished" };
+    case "restart":
+      return {
+        ...initialState,
+        questions: state.questions,
+        status: "ready",
+      };
     default:
       throw new Error("Unknown action");
   }
@@ -107,7 +113,7 @@ const App = () => {
           </>
         )}
         {status === "finished" && (
-          <Finish points={points} maxPoints={maxPoints} />
+          <Finish points={points} maxPoints={maxPoints} dispatch={dispatch} />
         )}
       </Content>
     </div>

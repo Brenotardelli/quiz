@@ -1,12 +1,20 @@
 import React from "react";
 
-const Finish = ({ points, maxPoints }) => {
+const Finish = ({ points, maxPoints, dispatch }) => {
   const percentScore = (points / maxPoints) * 100;
   return (
-    <p className="result">
-      You Scored <strong>{points}</strong> out of {maxPoints} (
-      {Math.ceil(percentScore)}%)
-    </p>
+    <>
+      <p className="result">
+        You Scored <strong>{points}</strong> out of {maxPoints} (
+        {Math.ceil(percentScore)}%)
+      </p>
+      <button
+        className="btn btn-ui"
+        onClick={() => dispatch({ type: "restart" })}
+      >
+        Restart Quiz
+      </button>
+    </>
   );
 };
 
