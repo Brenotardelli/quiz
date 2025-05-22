@@ -1,8 +1,8 @@
 function Header() {
   return (
     <header className="app-header">
-      <img src="logo512.png" alt="React logo" />
-      <h1>The React Quiz</h1>
+      <span className="game-emoji">🎮</span>
+      <h1>The Gamer Quiz</h1>
     </header>
   );
 }

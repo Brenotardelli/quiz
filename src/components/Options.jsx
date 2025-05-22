@@ -1,7 +1,11 @@
 import React from "react";
+import { useQuiz } from "../context/QuizContext";
 
-const Options = ({ question, dispatch, answer }) => {
+const Options = ({ question }) => {
+  const { dispatch, answer, decodeHtml } = useQuiz();
   const hasAnswered = answer !== null;
+
+  if (!question?.options) return null;
   return (
     <div>
       <div className="options">
@@ -15,10 +19,10 @@ const Options = ({ question, dispatch, answer }) => {
                   : "wrong"
                 : ""
             }`}
-            onClick={() => dispatch({ type: "newAnsewr", payload: index })}
+            onClick={() => dispatch({ type: "newAnswer", payload: index })}
             disabled={hasAnswered}
           >
-            {option}
+            {decodeHtml(option)}
           </button>
         ))}
       </div>
